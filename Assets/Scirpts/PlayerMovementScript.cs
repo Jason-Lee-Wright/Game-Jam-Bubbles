@@ -11,10 +11,12 @@ public class PlayerMovementScript : MonoBehaviour
     private float movementX;
     private float movementY;
     public bool isGrounded;
-    public GameObject mainCamera;
 
-    private AudioSource pickUpPop;
-    private AudioSource dashSoapSlide;
+    public AudioClip SoapyDashSFX;
+    public AudioClip PickUpSFX;
+    public AudioSource audio;
+    //public AudioSource pickUpPop;
+    //public AudioSource dashSoapSlide;
 
     private bool isDashing = false;
     private float dashDuration = 3f;
@@ -26,7 +28,8 @@ public class PlayerMovementScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        pickUpPop = GetComponent<AudioSource>();
+        audio = GetComponent<AudioSource>();
+        //dashSoapSlide = GetComponent<AudioSource>();
     }
 
     void OnMove(InputValue movementValue)
@@ -38,22 +41,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Get the camera's forward and right directions
-        Vector3 cameraForward = mainCamera.transform.forward;
-        Vector3 cameraRight = mainCamera.transform.right;
-
-        // Make the movement flat on the ground
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-
-        // Normalize the vectors to avoid faster diagonal movement
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        // Create the movement direction based on camera orientation
-        Vector3 movement = cameraForward * movementY + cameraRight * movementX;
-
-        // Apply force to the Rigidbody
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement * speed);
     }
 
@@ -68,7 +56,8 @@ public class PlayerMovementScript : MonoBehaviour
         {
             isDashing = true;
             dashTimer = dashDuration;
-            dashSoapSlide.Play();
+            audio.clip = SoapyDashSFX;
+            audio.Play();
         }
         if (isDashing)
         {
@@ -104,8 +93,9 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
+            audio.clip = PickUpSFX;
             other.gameObject.SetActive(false);
-            pickUpPop.Play();
+            audio.Play();
         }
     }
 }
