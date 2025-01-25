@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu 
+public class MainMenu : MonoBehaviour
 {
     public GameObject Mainmenu, AskLeave, Options, Credits;
 
@@ -40,10 +40,5 @@ public class MainMenu
     public void QuitGame()
     {
         Application.Quit();
-    }
-
-    public void AreYouSure()
-    {
-
     }
 }
