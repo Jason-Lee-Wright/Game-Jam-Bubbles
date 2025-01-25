@@ -16,7 +16,7 @@ public class OutOfBoundScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             other.gameObject.transform.position = SpawnPoint;
             other.attachedRigidbody.velocity = Vector3.zero;

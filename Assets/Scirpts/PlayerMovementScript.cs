@@ -11,6 +11,7 @@ public class PlayerMovementScript : MonoBehaviour
     private float movementX;
     private float movementY;
     public bool isGrounded;
+    private AudioSource pickUpPop;
 
     public float speed = 1; // May be adjusted
     public float sprintSpeed = 100; // May be adusted
@@ -18,6 +19,7 @@ public class PlayerMovementScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        pickUpPop = GetComponent<AudioSource>();
     }
 
     void OnMove(InputValue movementValue)
@@ -68,6 +70,7 @@ public class PlayerMovementScript : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
+            pickUpPop.Play();
         }
     }
 }

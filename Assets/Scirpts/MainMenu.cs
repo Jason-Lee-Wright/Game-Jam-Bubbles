@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject Mainmenu, AskLeave, Options, Credits;
+    public GameObject Mainmenu, AskLeave, Credits;
 
 
     // Start is called before the first frame update
     void Awake()
     {
         AskLeave.SetActive(false);
-        Options.SetActive(false);
         Credits.SetActive(false);
     }
 
@@ -25,12 +24,6 @@ public class MainMenu : MonoBehaviour
     public void AskIfLeave()
     {
         AskLeave?.SetActive(true);
-        Mainmenu.SetActive(false);
-    }
-
-    public void OpenOptions()
-    {
-        Options?.SetActive(true);
         Mainmenu.SetActive(false);
     }
 
