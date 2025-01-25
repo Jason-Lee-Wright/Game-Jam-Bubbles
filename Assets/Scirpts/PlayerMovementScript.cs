@@ -7,14 +7,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementScript : MonoBehaviour
 {
-    public int JumpHigh = 500;
-
     private Rigidbody rb;
     private float movementX;
     private float movementY;
+    public bool isGrounded;
 
-    public float speed = 3; // May be adjusted
-    public float sprintSpeed = 5; // May be adusted
+    public float speed = 1; // May be adjusted
+    public float sprintSpeed = 100; // May be adusted
 
     void Start()
     {
@@ -36,9 +35,9 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(Vector3.up * JumpHigh); // 500 is used to mske it jump higher, so depending on the gameobject sizes, this number can be changed to make jumping more suitable.
+            rb.AddForce(Vector3.up * 500); // 500 is used to mske it jump higher, so depending on the gameobject sizes, this number can be changed to make jumping more suitable.
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -48,15 +47,27 @@ public class PlayerMovementScript : MonoBehaviour
         }
     }
 
-
-
-    // FOR SOF: Create a new class
-
-    private void OnCollsionEnter(Collision collision)
+    void OnCollisionStay(Collision other)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (other.gameObject.CompareTag("Ground"))
         {
-            Destroy(gameObject);
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
         }
     }
 }

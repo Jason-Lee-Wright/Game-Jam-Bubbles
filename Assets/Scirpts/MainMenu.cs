@@ -25,16 +25,19 @@ public class MainMenu : MonoBehaviour
     public void AskIfLeave()
     {
         AskLeave?.SetActive(true);
+        Mainmenu.SetActive(false);
     }
 
     public void OpenOptions()
     {
         Options?.SetActive(true);
+        Mainmenu.SetActive(false);
     }
 
     public void OpenCredits()
     {
         Credits?.SetActive(true);
+        Mainmenu.SetActive(false);
     }
 
     public void QuitGame()
@@ -42,8 +45,9 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void No()
+    public void DontQuit()
     {
-
+        AskLeave.SetActive(false);
+        Mainmenu.SetActive(true);
     }
 }
