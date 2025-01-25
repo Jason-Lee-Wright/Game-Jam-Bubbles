@@ -6,23 +6,44 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu 
 {
-    public void StartGame()
-    {
+    public GameObject Mainmenu, AskLeave, Options, Credits;
 
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        AskLeave.SetActive(false);
+        Options.SetActive(false);
+        Credits.SetActive(false);
     }
+
+    public void PlayGameGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void AskIfLeave()
+    {
+        AskLeave?.SetActive(true);
+    }
+
+    public void OpenOptions()
+    {
+        Options?.SetActive(true);
+    }
+
+    public void OpenCredits()
+    {
+        Credits?.SetActive(true);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void AreYouSure()
     {
-        
+
     }
 }
