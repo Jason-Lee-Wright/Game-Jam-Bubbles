@@ -21,9 +21,11 @@ public class PlayerMovementScript : MonoBehaviour
     //public AudioSource dashSoapSlide;
 
     private bool isDashing = false;
+    private bool canDash = true;
     private float dashDuration = 0.5f;
     private float DashCooldown = 3.0f;
     private float dashTimer = 0f;
+    private float dashNo = 0f;
 
     public float speed = 1; // May be adjusted
     public float sprintSpeed = 100; // May be adusted
@@ -70,10 +72,12 @@ public class PlayerMovementScript : MonoBehaviour
             rb.AddForce(Vector3.up * 500); // 500 is used to mske it jump higher, so depending on the gameobject sizes, this number can be changed to make jumping more suitable.
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             isDashing = true;
+            canDash = false;
             dashTimer = dashDuration;
+            dashNo = DashCooldown;
         }
         if (isDashing)
         {
@@ -100,6 +104,15 @@ public class PlayerMovementScript : MonoBehaviour
             if (dashTimer <= 0)
             {
                 isDashing = false;
+            }
+        }
+        if (!canDash)
+        {
+            dashNo -= Time.deltaTime;
+
+            if (dashNo < 0)
+            {
+                canDash = true;
             }
         }
     }
