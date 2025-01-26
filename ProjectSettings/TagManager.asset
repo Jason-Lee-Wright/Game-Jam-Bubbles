@@ -6,6 +6,10 @@ TagManager:
   tags:
   - PickUp
   - Ground
+  - O
+  - P
+  - A
+  - S
   layers:
   - Default
   - TransparentFX

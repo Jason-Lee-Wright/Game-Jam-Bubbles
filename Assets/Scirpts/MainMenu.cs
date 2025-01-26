@@ -43,4 +43,10 @@ public class MainMenu : MonoBehaviour
         AskLeave.SetActive(false);
         Mainmenu.SetActive(true);
     }
+
+    public void NOODLES()
+    {
+        Mainmenu.SetActive(true);
+        Credits.SetActive(false);
+    }
 }
