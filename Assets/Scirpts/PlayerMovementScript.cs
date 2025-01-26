@@ -12,14 +12,17 @@ public class PlayerMovementScript : MonoBehaviour
     private float movementY;
     public bool isGrounded;
 
+    public GameObject mainCamera;
+
     public AudioClip SoapyDashSFX;
     public AudioClip PickUpSFX;
-    public AudioSource audio;
+    public AudioSource Audio1;
     //public AudioSource pickUpPop;
     //public AudioSource dashSoapSlide;
 
     private bool isDashing = false;
-    private float dashDuration = 3f;
+    private float dashDuration = 0.5f;
+    private float DashCooldown = 3.0f;
     private float dashTimer = 0f;
 
     public float speed = 1; // May be adjusted
@@ -28,7 +31,7 @@ public class PlayerMovementScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        audio = GetComponent<AudioSource>();
+        Audio1 = GetComponent<AudioSource>();
         //dashSoapSlide = GetComponent<AudioSource>();
     }
 
@@ -41,7 +44,22 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        // Get the camera's forward and right directions
+        Vector3 cameraForward = mainCamera.transform.forward;
+        Vector3 cameraRight = mainCamera.transform.right;
+
+        // Make the movement flat on the ground
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        // Normalize the vectors to avoid faster diagonal movement
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        // Create the movement direction based on camera orientation
+        Vector3 movement = cameraForward * movementY + cameraRight * movementX;
+
+        // Apply force to the Rigidbody
         rb.AddForce(movement * speed);
     }
 
@@ -52,16 +70,29 @@ public class PlayerMovementScript : MonoBehaviour
             rb.AddForce(Vector3.up * 500); // 500 is used to mske it jump higher, so depending on the gameobject sizes, this number can be changed to make jumping more suitable.
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
         {
             isDashing = true;
             dashTimer = dashDuration;
-            audio.clip = SoapyDashSFX;
-            audio.Play();
         }
         if (isDashing)
         {
-            Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+            Audio1.clip = SoapyDashSFX;
+            Audio1.Play();
+
+            Vector3 cameraForward = mainCamera.transform.forward;
+            Vector3 cameraRight = mainCamera.transform.right;
+
+            // Make the movement flat on the ground
+            cameraForward.y = 0;
+            cameraRight.y = 0;
+
+            // Normalize the vectors to avoid faster diagonal movement
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            // Create the movement direction based on camera orientation
+            Vector3 movement = cameraForward * movementY + cameraRight * movementX;
             rb.AddForce(movement * sprintSpeed);
 
             dashTimer -= Time.deltaTime;
@@ -93,9 +124,9 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
-            audio.clip = PickUpSFX;
+            Audio1.clip = PickUpSFX;
             other.gameObject.SetActive(false);
-            audio.Play();
+            Audio1.Play();
         }
     }
 }
