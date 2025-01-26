@@ -49,4 +49,9 @@ public class MainMenu : MonoBehaviour
         Mainmenu.SetActive(true);
         Credits.SetActive(false);
     }
+
+    public void GO()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 }

@@ -46,66 +46,41 @@ public class Collecting : MonoBehaviour
             letter_S_Ui_off.SetActive(false);
             letter_S_ui_on.SetActive(true);
             score++;
-
-            if (other.CompareTag("O"))
-            {
-                letter_O_col.SetActive(false);
-                letter_O_ui_off.SetActive(false);
-                letter_O_ui_on.SetActive(true);
-                score++;
-
-                if (other.CompareTag("A"))
-                {
-                    letter_A_col.SetActive(false);
-                    letter_A_ui_off.SetActive(false);
-                    letter_A_ui_on.SetActive(true);
-                    score++;
-
-                    if (other.CompareTag("P"))
-                    {
-                        letter_P_col.SetActive(false);
-                        letter_P_ui_off.SetActive(false);
-                        letter_P_ui_on.SetActive(true);
-                        score++;
-                    }
-                    else
-                    {
-                        other.gameObject.SetActive(false);
-                        Res();
-                    }
-                }
-                else
-                {
-                    other.gameObject.SetActive(false);
-                    Res();
-                }
-
-            }
-
-            else
-            {
-                other.gameObject.SetActive(false);
-                Res();
-
-            }
-
         }
-        else
+       
+        if (other.CompareTag("O"))
         {
-            other.gameObject.SetActive(false);
-            Res();
+            letter_O_col.SetActive(false);
+            letter_O_ui_off.SetActive(false);
+            letter_O_ui_on.SetActive(true);
+            score++;
         }
-    }
 
-    public void Res()
-    {
+      
 
-        letter_S_col.SetActive(true);
-        letter_O_col.SetActive(true);
-        letter_A_col.SetActive(true);
-        letter_P_col.SetActive(true);
-        score = 0;
+
+        if (other.CompareTag("A"))
+        {
+            letter_A_col.SetActive(false);
+            letter_A_ui_off.SetActive(false);
+            letter_A_ui_on.SetActive(true);
+            score++;
+        }
+     
+
+        if (other.CompareTag("P"))
+        {
+            letter_P_col.SetActive(false);
+            letter_P_ui_off.SetActive(false);
+            letter_P_ui_on.SetActive(true);
+            score++;
+        }
+     
+
     }
+    
+
+
 
     private void Update()
     {
