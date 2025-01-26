@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGameGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -48,10 +49,5 @@ public class MainMenu : MonoBehaviour
     {
         Mainmenu.SetActive(true);
         Credits.SetActive(false);
-    }
-
-    public void GO()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

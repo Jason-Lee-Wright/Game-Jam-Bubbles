@@ -48,7 +48,7 @@ public class Collecting : MonoBehaviour
             score++;
         }
        
-        if (other.CompareTag("O"))
+        if (other.CompareTag("Work"))
         {
             letter_O_col.SetActive(false);
             letter_O_ui_off.SetActive(false);
